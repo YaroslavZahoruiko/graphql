@@ -1,0 +1,6 @@
+en:
+  graphql:
+    queries:
+      me: Get current user
+      project: Get project
+      projects: Get all projects by current user

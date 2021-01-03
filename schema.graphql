@@ -1,0 +1,220 @@
+"""
+Auth token provider
+"""
+type AuthTokenType {
+  """
+  Access JWT token
+  """
+  access: String!
+
+  """
+  CSRF protection token
+  """
+  csrf: String!
+
+  """
+  JWT token for refreshing access token
+  """
+  refresh: String!
+}
+
+"""
+Complete
+"""
+type CompleteType {
+  """
+  Completed result
+  """
+  success: Boolean!
+}
+
+type Mutation {
+  """
+  Create Project
+  """
+  createProject(input: ProjectInput!): ProjectType!
+
+  """
+  Destroy Project
+  """
+  destroyProject(id: ID!): CompleteType!
+
+  """
+  Updating current access token with refresh token
+  """
+  refreshToken: RefreshedAccessPayloadType!
+
+  """
+  Update Project
+  """
+  updateProject(id: ID!, input: ProjectInput!): ProjectType!
+
+  """
+  Sign in a user
+  """
+  userSignIn(input: UserSignInInput!): AuthTokenType!
+
+  """
+  Sign out a user
+  """
+  userSignOut: CompleteType
+
+  """
+  Sign up a user
+  """
+  userSignUp(input: UserSignUpInput!): AuthTokenType!
+}
+
+"""
+Project input
+"""
+input ProjectInput {
+  """
+  Title for project
+  """
+  title: String!
+}
+
+"""
+Project
+"""
+type ProjectType {
+  tasks: [TaskType!]!
+
+  """
+  Title for project
+  """
+  title: String!
+}
+
+type Query {
+  """
+  Get current user
+  """
+  me: UserAccountType!
+
+  """
+  Get project
+  """
+  project(id: ID!): ProjectType!
+
+  """
+  Get all projects by current user
+  """
+  projects: [ProjectType!]
+}
+
+"""
+Payload with refreshed access tokens
+"""
+type RefreshedAccessPayloadType {
+  """
+  JWT access token
+  """
+  access: String!
+
+  """
+  Expiration of access tokens
+  """
+  accessExpiresAt: String!
+
+  """
+  Token for signed cookies
+  """
+  csrf: String!
+}
+
+"""
+Task
+"""
+type TaskType {
+  """
+  Description for task
+  """
+  description: String
+
+  """
+  Title for task
+  """
+  title: String!
+}
+
+"""
+User account
+"""
+type UserAccountType {
+  """
+  Email of user account
+  """
+  email: String!
+
+  """
+  User account's profile
+  """
+  userProfile: UserProfileType
+}
+
+"""
+User profile
+"""
+type UserProfileType {
+  """
+  User's first name
+  """
+  firstName: String!
+
+  """
+  User's full name
+  """
+  fullName: String!
+
+  """
+  User's last name
+  """
+  lastName: String!
+}
+
+"""
+Sign in user via email
+"""
+input UserSignInInput {
+  """
+  User's account email
+  """
+  email: String!
+
+  """
+  User's account password
+  """
+  password: String!
+}
+
+"""
+Sign up user via email
+"""
+input UserSignUpInput {
+  """
+  User's account email
+  """
+  email: String!
+
+  """
+  User's first name
+  """
+  firstName: String!
+
+  """
+  User's last name
+  """
+  lastName: String!
+
+  """
+  User's account password
+  """
+  password: String!
+
+  """
+  User's account password confirmation
+  """
+  passwordConfirmation: String!
+}
